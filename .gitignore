@@ -1,0 +1,7 @@
+# Intermediate extracted assets from original PDF
+assets/extracted/
+assets/pages/
+
+# System files
+.DS_Store
+Thumbs.db
