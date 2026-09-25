@@ -19,31 +19,44 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================================== */
 function initThemeToggle() {
   const themeButtons = document.querySelectorAll('.theme-toggle-btn');
-  const storedTheme = localStorage.getItem('dc_portfolio_theme') || 'dark';
+  
+  function getStoredTheme() {
+    try {
+      return localStorage.getItem('dc_portfolio_theme') || 'dark';
+    } catch (e) {
+      return 'dark';
+    }
+  }
 
+  function setStoredTheme(theme) {
+    try {
+      localStorage.setItem('dc_portfolio_theme', theme);
+    } catch (e) {}
+  }
+
+  const storedTheme = getStoredTheme();
   applyTheme(storedTheme);
 
   themeButtons.forEach(btn => {
-    let lastTap = 0;
-    const handleToggle = (e) => {
+    btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const now = Date.now();
-      if (now - lastTap < 250) return;
-      lastTap = now;
-
       const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       applyTheme(newTheme);
-      localStorage.setItem('dc_portfolio_theme', newTheme);
-    };
-
-    btn.addEventListener('click', handleToggle);
-    btn.addEventListener('touchend', handleToggle);
+      setStoredTheme(newTheme);
+    });
   });
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-theme');
+      if (document.body) document.body.classList.add('light-theme');
+    } else {
+      document.documentElement.classList.remove('light-theme');
+      if (document.body) document.body.classList.remove('light-theme');
+    }
 
     const icons = document.querySelectorAll('.theme-icon-container, #themeIcon');
     icons.forEach(icon => {
