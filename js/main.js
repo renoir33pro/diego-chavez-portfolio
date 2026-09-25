@@ -119,6 +119,7 @@ function initMobileMenu() {
     if (navOverlay) navOverlay.classList.add('active');
     document.body.classList.add('menu-open');
     document.documentElement.classList.add('menu-open');
+    lockBodyScroll();
   }
 
   function closeDrawer(e) {
@@ -128,6 +129,10 @@ function initMobileMenu() {
     if (navOverlay) navOverlay.classList.remove('active');
     document.body.classList.remove('menu-open');
     document.documentElement.classList.remove('menu-open');
+    const remainingModal = document.querySelector('.modal-overlay.active');
+    if (!remainingModal) {
+      unlockBodyScroll();
+    }
   }
 
   if (menuBtn) {
@@ -273,22 +278,58 @@ const serviceData = {
 };
 
 /* ==========================================================================
-   MODAL SCROLL LOCK HELPERS
+   SCROLL LOCK MANAGER (Zero background movement on iOS Safari & Android)
    ========================================================================== */
+let savedScrollY = 0;
+let isBodyLocked = false;
+
+function lockBodyScroll() {
+  if (isBodyLocked) return;
+  savedScrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  
+  document.body.style.position = 'fixed';
+  document.body.style.top = `-${savedScrollY}px`;
+  document.body.style.left = '0';
+  document.body.style.right = '0';
+  document.body.style.width = '100%';
+  document.body.style.overflow = 'hidden';
+  
+  document.documentElement.classList.add('scroll-locked', 'modal-open');
+  document.body.classList.add('scroll-locked', 'modal-open');
+  isBodyLocked = true;
+}
+
+function unlockBodyScroll() {
+  if (!isBodyLocked) return;
+  
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.left = '';
+  document.body.style.right = '';
+  document.body.style.width = '';
+  document.body.style.overflow = '';
+  
+  document.documentElement.classList.remove('scroll-locked', 'modal-open');
+  document.body.classList.remove('scroll-locked', 'modal-open');
+  isBodyLocked = false;
+  
+  window.scrollTo(0, savedScrollY);
+}
+
 function openModal(modalEl) {
   if (!modalEl) return;
+  lockBodyScroll();
   modalEl.classList.add('active');
-  document.body.classList.add('modal-open');
-  document.documentElement.classList.add('modal-open');
 }
 
 function closeModal(modalEl) {
   if (!modalEl) return;
   modalEl.classList.remove('active');
-  const remaining = document.querySelector('.modal-overlay.active');
-  if (!remaining) {
-    document.body.classList.remove('modal-open');
-    document.documentElement.classList.remove('modal-open');
+  const remainingModal = document.querySelector('.modal-overlay.active');
+  const drawer = document.getElementById('mobileDrawer');
+  const drawerOpen = drawer && drawer.classList.contains('open');
+  if (!remainingModal && !drawerOpen) {
+    unlockBodyScroll();
   }
 }
 

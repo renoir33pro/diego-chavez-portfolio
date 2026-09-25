@@ -2027,7 +2027,9 @@ body.light-theme .mobile-drawer {
 html.modal-open,
 body.modal-open,
 html.menu-open,
-body.menu-open {
+body.menu-open,
+html.scroll-locked,
+body.scroll-locked {
   overflow: hidden !important;
   overscroll-behavior: contain !important;
 }
@@ -2049,7 +2051,6 @@ body.menu-open {
   opacity: 0;
   transition: opacity var(--transition-normal);
   overscroll-behavior: contain !important;
-  touch-action: none;
 }
 
 .modal-overlay.active {
@@ -2696,7 +2697,6 @@ body.menu-open {
   .modal-overlay {
     padding: 0.85rem !important;
     overscroll-behavior: contain !important;
-    touch-action: none !important;
   }
 
   .modal-container {
