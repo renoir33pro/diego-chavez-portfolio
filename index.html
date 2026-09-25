@@ -2,6 +2,17 @@
 <html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8">
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('dc_portfolio_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        if (t === 'light') {
+          document.documentElement.classList.add('light-theme');
+        }
+      } catch(e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portfolio interactivo de Diego Chávez — Social Media Manager y Estratega Digital. Casos de éxito virales, producción audiovisual, paid media y cotizador de servicios.">
   <meta name="author" content="Diego Chávez">
@@ -19,7 +30,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=2.3">
+  <link rel="stylesheet" href="css/style.css?v=2.4">
 </head>
 <body>
 
@@ -1181,6 +1192,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=2.3"></script>
+  <script src="js/main.js?v=2.4"></script>
 </body>
 </html>

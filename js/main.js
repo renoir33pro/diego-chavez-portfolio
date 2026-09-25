@@ -37,15 +37,27 @@ function initThemeToggle() {
   const storedTheme = getStoredTheme();
   applyTheme(storedTheme);
 
-  themeButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  let isLock = false;
+  function triggerThemeToggle(e) {
+    if (e) {
       e.preventDefault();
       e.stopPropagation();
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      applyTheme(newTheme);
-      setStoredTheme(newTheme);
-    });
+    }
+    if (isLock) return;
+    isLock = true;
+    setTimeout(() => { isLock = false; }, 280);
+
+    const activeTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const nextTheme = activeTheme === 'dark' ? 'light' : 'dark';
+    applyTheme(nextTheme);
+    setStoredTheme(nextTheme);
+  }
+
+  themeButtons.forEach(btn => {
+    // Immediate 0ms response on mobile phones
+    btn.addEventListener('touchend', triggerThemeToggle, { passive: false });
+    // Standard click for desktop mouse and accessibility
+    btn.addEventListener('click', triggerThemeToggle);
   });
 
   function applyTheme(theme) {
