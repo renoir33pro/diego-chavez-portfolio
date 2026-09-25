@@ -118,6 +118,7 @@ function initMobileMenu() {
     if (menuBtn) menuBtn.classList.add('active');
     if (navOverlay) navOverlay.classList.add('active');
     document.body.classList.add('menu-open');
+    document.documentElement.classList.add('menu-open');
   }
 
   function closeDrawer(e) {
@@ -126,6 +127,7 @@ function initMobileMenu() {
     if (menuBtn) menuBtn.classList.remove('active');
     if (navOverlay) navOverlay.classList.remove('active');
     document.body.classList.remove('menu-open');
+    document.documentElement.classList.remove('menu-open');
   }
 
   if (menuBtn) {
@@ -144,6 +146,9 @@ function initMobileMenu() {
 
   if (navOverlay) {
     navOverlay.addEventListener('click', closeDrawer);
+    navOverlay.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+    }, { passive: false });
   }
 
   drawerLinks.forEach(link => {
@@ -267,6 +272,34 @@ const serviceData = {
   }
 };
 
+/* ==========================================================================
+   MODAL SCROLL LOCK HELPERS
+   ========================================================================== */
+function openModal(modalEl) {
+  if (!modalEl) return;
+  modalEl.classList.add('active');
+  document.body.classList.add('modal-open');
+  document.documentElement.classList.add('modal-open');
+}
+
+function closeModal(modalEl) {
+  if (!modalEl) return;
+  modalEl.classList.remove('active');
+  const remaining = document.querySelector('.modal-overlay.active');
+  if (!remaining) {
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+  }
+}
+
+// Global Escape key listener for open modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const activeModal = document.querySelector('.modal-overlay.active');
+    if (activeModal) closeModal(activeModal);
+  }
+});
+
 function initFolderModals() {
   const folderCards = document.querySelectorAll('.folder-card');
   const modalOverlay = document.getElementById('detailsModal');
@@ -275,6 +308,7 @@ function initFolderModals() {
   const modalDesc = document.getElementById('modalDesc');
   const modalPoints = document.getElementById('modalPoints');
   const modalClose = document.getElementById('modalCloseBtn');
+  const modalCtaBtn = document.getElementById('modalCtaBtn');
 
   if (!modalOverlay) return;
 
@@ -295,21 +329,34 @@ function initFolderModals() {
         </li>
       `).join('');
 
-      modalOverlay.classList.add('active');
+      openModal(modalOverlay);
     });
   });
 
   if (modalClose) {
     modalClose.addEventListener('click', () => {
-      modalOverlay.classList.remove('active');
+      closeModal(modalOverlay);
+    });
+  }
+
+  if (modalCtaBtn) {
+    modalCtaBtn.addEventListener('click', () => {
+      closeModal(modalOverlay);
     });
   }
 
   modalOverlay.addEventListener('click', (e) => {
     if (e.target === modalOverlay) {
-      modalOverlay.classList.remove('active');
+      closeModal(modalOverlay);
     }
   });
+
+  // Prevent background touch drag when touching backdrop
+  modalOverlay.addEventListener('touchmove', (e) => {
+    if (e.target === modalOverlay) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 }
 
 /* ==========================================================================
@@ -451,21 +498,28 @@ function initReelModals() {
         </div>
       `;
 
-      reelModal.classList.add('active');
+      openModal(reelModal);
     });
   });
 
   if (reelModalClose) {
     reelModalClose.addEventListener('click', () => {
-      reelModal.classList.remove('active');
+      closeModal(reelModal);
     });
   }
 
   reelModal.addEventListener('click', (e) => {
     if (e.target === reelModal) {
-      reelModal.classList.remove('active');
+      closeModal(reelModal);
     }
   });
+
+  // Prevent background touch drag when touching backdrop
+  reelModal.addEventListener('touchmove', (e) => {
+    if (e.target === reelModal) {
+      e.preventDefault();
+    }
+  }, { passive: false });
 }
 
 /* ==========================================================================

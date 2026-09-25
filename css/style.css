@@ -627,18 +627,38 @@ body.light-theme .mobile-drawer {
 }
 
 .mobile-drawer-theme-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 0.95rem;
-  border-radius: var(--radius-full);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-  touch-action: manipulation;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  background: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+  cursor: pointer !important;
+  touch-action: manipulation !important;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.mobile-drawer-theme-btn:active {
+  transform: scale(0.92);
+}
+
+.mobile-drawer-theme-btn .theme-icon-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.mobile-drawer-theme-btn .theme-text-status {
+  display: none !important;
 }
 
 .nav-overlay {
@@ -655,7 +675,8 @@ body.light-theme .mobile-drawer {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
-  touch-action: manipulation;
+  touch-action: none;
+  overscroll-behavior: contain !important;
 }
 
 .nav-overlay.active {
@@ -2002,6 +2023,15 @@ body.light-theme .mobile-drawer {
 /* ==========================================================================
    MODAL / LIGHTBOX
    ========================================================================== */
+/* Background Scroll Lock when Modal or Drawer is Open */
+html.modal-open,
+body.modal-open,
+html.menu-open,
+body.menu-open {
+  overflow: hidden !important;
+  overscroll-behavior: contain !important;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -2010,6 +2040,7 @@ body.light-theme .mobile-drawer {
   height: 100%;
   background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   z-index: 2000;
   display: none;
   align-items: center;
@@ -2017,6 +2048,8 @@ body.light-theme .mobile-drawer {
   padding: 2rem;
   opacity: 0;
   transition: opacity var(--transition-normal);
+  overscroll-behavior: contain !important;
+  touch-action: none;
 }
 
 .modal-overlay.active {
@@ -2035,6 +2068,9 @@ body.light-theme .mobile-drawer {
   position: relative;
   box-shadow: var(--shadow-lg);
   padding: 2.5rem;
+  overscroll-behavior: contain !important;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-close-btn {
@@ -2659,6 +2695,8 @@ body.light-theme .mobile-drawer {
   /* Modal Container & Service Popups */
   .modal-overlay {
     padding: 0.85rem !important;
+    overscroll-behavior: contain !important;
+    touch-action: none !important;
   }
 
   .modal-container {
@@ -2670,6 +2708,8 @@ body.light-theme .mobile-drawer {
     overflow-x: hidden !important;
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: pan-y !important;
     box-sizing: border-box !important;
   }
 
