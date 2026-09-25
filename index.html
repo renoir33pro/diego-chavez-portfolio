@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=2.1">
+  <link rel="stylesheet" href="css/style.css?v=2.2">
 </head>
 <body>
 
@@ -33,8 +33,8 @@
         <span class="logo-subtitle">Social Media Manager • Estratega</span>
       </a>
 
-      <!-- Desktop & Mobile Nav Links -->
-      <nav aria-label="Navegación principal">
+      <!-- Desktop Nav Links -->
+      <nav class="desktop-nav" aria-label="Navegación principal">
         <ul class="nav-links" id="navLinks">
           <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
           <li><a href="#especialidades" class="nav-link">Especialidades</a></li>
@@ -42,45 +42,13 @@
           <li><a href="#casos-exito" class="nav-link">Casos de Éxito</a></li>
           <li><a href="#inversion" class="nav-link">Tarifas & Cotizador</a></li>
           <li><a href="#contacto" class="nav-link">Contacto</a></li>
-          <li class="mobile-drawer-actions">
-            <div class="mobile-theme-row">
-              <span class="mobile-theme-label">Modo Visual</span>
-              <button class="theme-toggle-btn mobile-theme-toggle-btn" aria-label="Cambiar tema">
-                <span class="theme-icon-container">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="5"></circle>
-                    <line x1="12" y1="1" x2="12" y2="3"></line>
-                    <line x1="12" y1="21" x2="12" y2="23"></line>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                    <line x1="1" y1="12" x2="3" y2="12"></line>
-                    <line x1="21" y1="12" x2="23" y2="12"></line>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                  </svg>
-                </span>
-                <span class="theme-text-status">Cambiar Tema</span>
-              </button>
-            </div>
-            <a href="assets/pdf/portfolio-diego-chavez.pdf" download="PORTFOLIO-DIEGO-CHAVEZ.pdf" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              <span>Descargar PDF Brochure</span>
-            </a>
-            <a href="https://wa.me/584246890741?text=Hola%20Diego,%20estoy%20viendo%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20agendar%20una%20reuni%C3%B3n." target="_blank" class="btn btn-primary btn-sm" style="width:100%; justify-content:center;">
-              <span>Conversar por WhatsApp</span>
-            </a>
-          </li>
         </ul>
       </nav>
 
       <!-- Action Buttons -->
       <div class="header-actions">
         <!-- Theme Toggle -->
-        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Cambiar tema">
+        <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Cambiar tema" title="Cambiar tema">
           <span id="themeIcon" class="theme-icon-container">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="5"></circle>
@@ -120,6 +88,59 @@
       </div>
     </div>
   </header>
+
+  <!-- Mobile Drawer (Standalone to prevent backdrop-filter stacking clipping) -->
+  <aside class="mobile-drawer" id="mobileDrawer" aria-label="Menú de navegación móvil">
+    <div class="mobile-drawer-header">
+      <div class="logo-group">
+        <span class="logo-title">DIEGO CHÁVEZ</span>
+        <span class="logo-subtitle">Estratega Digital</span>
+      </div>
+      <button class="mobile-drawer-close" id="mobileDrawerClose" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <ul class="mobile-drawer-nav">
+      <li><a href="#sobre-mi" class="mobile-drawer-link">Sobre Mí</a></li>
+      <li><a href="#especialidades" class="mobile-drawer-link">Especialidades</a></li>
+      <li><a href="#servicios" class="mobile-drawer-link">Servicios</a></li>
+      <li><a href="#casos-exito" class="mobile-drawer-link">Casos de Éxito</a></li>
+      <li><a href="#inversion" class="mobile-drawer-link">Tarifas & Cotizador</a></li>
+      <li><a href="#contacto" class="mobile-drawer-link">Contacto</a></li>
+    </ul>
+
+    <div class="mobile-drawer-footer">
+      <div class="mobile-theme-row">
+        <span class="mobile-theme-label">Modo Visual</span>
+        <button class="theme-toggle-btn mobile-drawer-theme-btn" id="mobileDrawerThemeBtn" aria-label="Cambiar tema">
+          <span class="theme-icon-container">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span class="theme-text-status">Modo Claro</span>
+        </button>
+      </div>
+      <a href="assets/pdf/portfolio-diego-chavez.pdf" download="PORTFOLIO-DIEGO-CHAVEZ.pdf" class="btn btn-secondary btn-sm" style="width:100%; justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Descargar PDF Brochure</span>
+      </a>
+      <a href="https://wa.me/584246890741?text=Hola%20Diego,%20estoy%20viendo%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20agendar%20una%20reuni%C3%B3n." target="_blank" class="btn btn-whatsapp btn-sm" style="width:100%; justify-content:center;">
+        <span>Conversar por WhatsApp</span>
+      </a>
+    </div>
+  </aside>
   <div class="nav-overlay" id="navOverlay"></div>
 
   <main>
@@ -1158,6 +1179,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=2.1"></script>
+  <script src="js/main.js?v=2.2"></script>
 </body>
 </html>

@@ -21,21 +21,30 @@ function initThemeToggle() {
   const themeButtons = document.querySelectorAll('.theme-toggle-btn');
   const storedTheme = localStorage.getItem('dc_portfolio_theme') || 'dark';
 
-  document.documentElement.setAttribute('data-theme', storedTheme);
-  updateThemeIcons(storedTheme);
+  applyTheme(storedTheme);
 
   themeButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    let lastTap = 0;
+    const handleToggle = (e) => {
+      e.preventDefault();
       e.stopPropagation();
-      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const now = Date.now();
+      if (now - lastTap < 250) return;
+      lastTap = now;
+
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', newTheme);
+      applyTheme(newTheme);
       localStorage.setItem('dc_portfolio_theme', newTheme);
-      updateThemeIcons(newTheme);
-    });
+    };
+
+    btn.addEventListener('click', handleToggle);
+    btn.addEventListener('touchend', handleToggle);
   });
 
-  function updateThemeIcons(theme) {
+  function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+
     const icons = document.querySelectorAll('.theme-icon-container, #themeIcon');
     icons.forEach(icon => {
       if (theme === 'dark') {
@@ -73,51 +82,56 @@ function initThemeToggle() {
    ========================================================================== */
 function initMobileMenu() {
   const menuBtn = document.getElementById('mobileMenuBtn');
-  const navLinks = document.getElementById('navLinks');
+  const drawer = document.getElementById('mobileDrawer');
+  const drawerClose = document.getElementById('mobileDrawerClose');
   const navOverlay = document.getElementById('navOverlay');
+  const drawerLinks = document.querySelectorAll('.mobile-drawer-link');
 
-  function openMenu() {
-    navLinks.classList.add('open');
-    menuBtn.classList.add('active');
+  function openDrawer(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    if (drawer) drawer.classList.add('open');
+    if (menuBtn) menuBtn.classList.add('active');
     if (navOverlay) navOverlay.classList.add('active');
     document.body.classList.add('menu-open');
   }
 
-  function closeMenu() {
-    navLinks.classList.remove('open');
-    menuBtn.classList.remove('active');
+  function closeDrawer(e) {
+    if (e) { e.preventDefault(); e.stopPropagation(); }
+    if (drawer) drawer.classList.remove('open');
+    if (menuBtn) menuBtn.classList.remove('active');
     if (navOverlay) navOverlay.classList.remove('active');
     document.body.classList.remove('menu-open');
   }
 
-  if (menuBtn && navLinks) {
+  if (menuBtn) {
     menuBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (navLinks.classList.contains('open')) {
-        closeMenu();
+      if (drawer && drawer.classList.contains('open')) {
+        closeDrawer(e);
       } else {
-        openMenu();
-      }
-    });
-
-    if (navOverlay) {
-      navOverlay.addEventListener('click', closeMenu);
-    }
-
-    // Close menu when clicking any nav link
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        closeMenu();
-      });
-    });
-
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-        closeMenu();
+        openDrawer(e);
       }
     });
   }
+
+  if (drawerClose) {
+    drawerClose.addEventListener('click', closeDrawer);
+  }
+
+  if (navOverlay) {
+    navOverlay.addEventListener('click', closeDrawer);
+  }
+
+  drawerLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      closeDrawer();
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('open')) {
+      closeDrawer();
+    }
+  });
 }
 
 function initHeaderScroll() {
