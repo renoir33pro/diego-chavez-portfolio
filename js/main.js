@@ -18,45 +18,53 @@ document.addEventListener('DOMContentLoaded', () => {
    1. THEME TOGGLE (Dark / Light Mode)
    ========================================================================== */
 function initThemeToggle() {
-  const themeToggleBtn = document.getElementById('themeToggleBtn');
-  const themeIcon = document.getElementById('themeIcon');
+  const themeButtons = document.querySelectorAll('.theme-toggle-btn');
   const storedTheme = localStorage.getItem('dc_portfolio_theme') || 'dark';
 
   document.documentElement.setAttribute('data-theme', storedTheme);
-  updateThemeIcon(storedTheme);
+  updateThemeIcons(storedTheme);
 
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener('click', () => {
+  themeButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const currentTheme = document.documentElement.getAttribute('data-theme');
       const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', newTheme);
       localStorage.setItem('dc_portfolio_theme', newTheme);
-      updateThemeIcon(newTheme);
+      updateThemeIcons(newTheme);
     });
-  }
+  });
 
-  function updateThemeIcon(theme) {
-    if (!themeIcon) return;
-    if (theme === 'dark') {
-      // Moon/Sun icon toggle
-      themeIcon.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>`;
-    } else {
-      themeIcon.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>`;
-    }
+  function updateThemeIcons(theme) {
+    const icons = document.querySelectorAll('.theme-icon-container, #themeIcon');
+    icons.forEach(icon => {
+      if (theme === 'dark') {
+        // Sun icon (click to switch to light)
+        icon.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>`;
+      } else {
+        // Moon icon (click to switch to dark)
+        icon.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>`;
+      }
+    });
+
+    const statusTexts = document.querySelectorAll('.theme-text-status');
+    statusTexts.forEach(txt => {
+      txt.textContent = theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro';
+    });
   }
 }
 
@@ -66,19 +74,48 @@ function initThemeToggle() {
 function initMobileMenu() {
   const menuBtn = document.getElementById('mobileMenuBtn');
   const navLinks = document.getElementById('navLinks');
+  const navOverlay = document.getElementById('navOverlay');
+
+  function openMenu() {
+    navLinks.classList.add('open');
+    menuBtn.classList.add('active');
+    if (navOverlay) navOverlay.classList.add('active');
+    document.body.classList.add('menu-open');
+  }
+
+  function closeMenu() {
+    navLinks.classList.remove('open');
+    menuBtn.classList.remove('active');
+    if (navOverlay) navOverlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
+  }
 
   if (menuBtn && navLinks) {
-    menuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      menuBtn.classList.toggle('active');
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (navLinks.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
+
+    if (navOverlay) {
+      navOverlay.addEventListener('click', closeMenu);
+    }
 
     // Close menu when clicking any nav link
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        menuBtn.classList.remove('active');
+        closeMenu();
       });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+        closeMenu();
+      }
     });
   }
 }
