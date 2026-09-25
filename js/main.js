@@ -289,8 +289,8 @@ function initFolderModals() {
       modalDesc.innerText = data.description;
 
       modalPoints.innerHTML = data.points.map(pt => `
-        <li style="display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:0.75rem; font-size:0.95rem; color:var(--text-secondary);">
-          <span style="color:var(--accent-cyan); font-weight:bold; flex-shrink:0;">✓</span>
+        <li class="modal-service-point-item">
+          <span class="modal-service-point-icon">✓</span>
           <span>${pt}</span>
         </li>
       `).join('');
@@ -408,7 +408,7 @@ function initReelModals() {
       if (!data) return;
 
       reelModalBody.innerHTML = `
-        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:2rem; align-items:center;">
+        <div class="reel-modal-grid">
           <div style="text-align:center;">
             <div style="position:relative; border-radius:12px; overflow:hidden; border:1px solid var(--border-subtle); max-width:280px; margin:0 auto; box-shadow:var(--shadow-md);">
               <img src="${data.thumbImg}" alt="${data.title}" style="width:100%; display:block;">

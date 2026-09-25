@@ -2059,6 +2059,88 @@ body.light-theme .mobile-drawer {
   color: #fff;
 }
 
+.modal-badge-wrapper {
+  margin-bottom: 0.75rem;
+  padding-right: 3rem;
+}
+
+.modal-service-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  word-break: normal;
+  overflow-wrap: break-word;
+  padding-right: 2.5rem;
+}
+
+.modal-service-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.modal-service-subtitle {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.modal-service-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-service-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.modal-service-point-icon {
+  color: var(--accent-cyan);
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.modal-service-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.reel-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* ==========================================================================
    RESPONSIVE DESIGN (MEDIA QUERIES)
    Desktop layout is completely preserved. Mobile is polished and pixel-perfect.
@@ -2574,19 +2656,87 @@ body.light-theme .mobile-drawer {
     padding: 0.85rem 1rem;
   }
 
-  /* Modal Container */
+  /* Modal Container & Service Popups */
+  .modal-overlay {
+    padding: 0.85rem !important;
+  }
+
   .modal-container {
-    padding: 1.5rem 1.2rem;
-    width: 94%;
-    max-height: 85vh;
+    padding: 2rem 1.2rem 1.5rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 88dvh !important;
+    border-radius: var(--radius-md) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
   }
 
   .modal-close-btn {
-    top: 1rem;
-    right: 1rem;
-    width: 36px;
-    height: 36px;
-    font-size: 1rem;
+    top: 0.85rem !important;
+    right: 0.85rem !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 1rem !important;
+    z-index: 10 !important;
+  }
+
+  .modal-badge-wrapper {
+    padding-right: 2.75rem !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .modal-service-title {
+    font-size: clamp(1.1rem, 4.6vw, 1.4rem) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em !important;
+    padding-right: 0 !important;
+    margin-bottom: 0.85rem !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: manual !important;
+  }
+
+  .modal-service-desc {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1.25rem !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .modal-service-subtitle {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .modal-service-points {
+    margin-bottom: 1.5rem !important;
+    gap: 0.65rem !important;
+  }
+
+  .modal-service-point-item {
+    font-size: 0.88rem !important;
+    line-height: 1.45 !important;
+    gap: 0.6rem !important;
+  }
+
+  .modal-service-footer {
+    width: 100% !important;
+    margin-top: 0.5rem !important;
+  }
+
+  .modal-service-footer .modal-cta-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 0.75rem 1rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .reel-modal-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
   }
 
   /* Footer */
@@ -2633,5 +2783,22 @@ body.light-theme .mobile-drawer {
   .logo-subtitle {
     font-size: 0.58rem;
     max-width: 140px;
+  }
+
+  .modal-overlay {
+    padding: 0.5rem !important;
+  }
+
+  .modal-container {
+    padding: 1.75rem 0.95rem 1.25rem !important;
+    max-height: 90dvh !important;
+  }
+
+  .modal-service-title {
+    font-size: clamp(1.1rem, 5.2vw, 1.35rem) !important;
+  }
+
+  .modal-service-point-item {
+    font-size: 0.84rem !important;
   }
 }

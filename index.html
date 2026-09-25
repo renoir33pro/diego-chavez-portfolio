@@ -30,7 +30,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=2.4">
+  <link rel="stylesheet" href="css/style.css?v=2.5">
 </head>
 <body>
 
@@ -1162,18 +1162,20 @@
   <div class="modal-overlay" id="detailsModal">
     <div class="modal-container">
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Cerrar ventana">✕</button>
-      <span class="section-tag" id="modalBadge">Fase de Servicio</span>
-      <h3 id="modalTitle" style="font-size:2rem; margin-bottom:1rem; color:var(--text-primary);">Título del Servicio</h3>
-      <p id="modalDesc" style="font-size:1.05rem; color:var(--text-secondary); line-height:1.7; margin-bottom:2rem;">Descripción detallada.</p>
+      <div class="modal-badge-wrapper">
+        <span class="section-tag" id="modalBadge">Fase de Servicio</span>
+      </div>
+      <h3 id="modalTitle" class="modal-service-title">Título del Servicio</h3>
+      <p id="modalDesc" class="modal-service-desc">Descripción detallada.</p>
       
-      <h5 style="font-size:0.95rem; text-transform:uppercase; color:var(--text-primary); letter-spacing:0.05em; margin-bottom:1rem;">Entregables y Metodología:</h5>
-      <ul id="modalPoints" style="list-style:none; padding:0; margin-bottom:2.5rem;">
+      <h5 class="modal-service-subtitle">Entregables y Metodología:</h5>
+      <ul id="modalPoints" class="modal-service-points">
         <!-- Injected via JavaScript -->
       </ul>
 
-      <div style="display:flex; justify-content:flex-end; gap:1rem;">
-        <a href="#cotizador" onclick="document.getElementById('detailsModal').classList.remove('active');" class="btn btn-primary btn-sm">
-          Cotizar este servicio
+      <div class="modal-service-footer">
+        <a href="#inversion" onclick="document.getElementById('detailsModal').classList.remove('active');" class="btn btn-primary btn-sm modal-cta-btn">
+          <span>Cotizar este servicio</span>
         </a>
       </div>
     </div>
@@ -1192,6 +1194,6 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/main.js?v=2.4"></script>
+  <script src="js/main.js?v=2.5"></script>
 </body>
 </html>
